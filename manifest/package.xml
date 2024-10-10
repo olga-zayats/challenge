@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+	<types>
+		<members>Guild__c</members>
+		<members>Hero__c</members>
+		<members>Mission_Assignment__c</members>
+		<members>Superhero_Mission__c</members>
+		<name>CustomObject</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>GlobalValueSet</name>
+	</types>
+	<types>
+		<members>Guild__c-Guild Layout</members>
+		<name>Layout</name>
+	</types>
+	<types>
+		<members>Hero_Admin</members>
+		<members>Hero_User</members>
+		<name>PermissionSet</name>
+	</types>
+	<types>
+		<members>Admin</members>
+		<name>Profile</name>
+	</types>
+	<version>60.0</version>
+</Package>
