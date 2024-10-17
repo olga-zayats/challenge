@@ -1,0 +1,53 @@
+.THIS {
+    height: 800px;
+    border-radius: 20px;
+    padding: 24px;
+    border: none;
+    margin: 16px 0;
+    color: rgba(24, 24, 24, 0.95);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: -0.006em;
+    line-height: 16px;
+}
+
+.THIS th.missions-header {
+    background-color: #F1F3F5;
+    font-weight: normal;
+    color: #333333;
+    text-align: left;
+    font-size: 12px;
+}
+
+.THIS th.missions-header:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+.THIS th.missions-header:last-child {
+    border-radius: 0 4px 4px 0;
+}
+
+.THIS .slds-card__header-title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 34px;
+    letter-spacing: 0.01em;
+    text-align: left;
+    color: black;
+}
+
+.THIS tr:not(thead tr) {
+    border-bottom: 1px solid rgba(2, 23, 53, 0.1);
+}
+
+.THIS .custom-badge-dark {
+    background-color: #181818;
+    color: white;
+    width: 30px;
+    height: 28px;
+    border-radius: 5px;
+}
+
+.THIS .custom-badge-dark span {
+    margin: 0 auto;
+}

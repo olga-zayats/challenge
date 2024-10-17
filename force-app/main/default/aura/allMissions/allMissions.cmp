@@ -1,0 +1,57 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="SuperheroMissionController">
+
+    <aura:attribute name="data" type="List" />
+    <aura:attribute name="columns" type="List" />
+    <aura:attribute name="title" type="String" default="All Missions" />
+    <aura:attribute name="offset" type="Integer" default="0" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+    <lightning:card>
+        <aura:set attribute="title">
+            {!v.title}
+            <lightning:icon iconName="utility:connected_apps" size="small"/>
+        </aura:set>
+
+        <table class="slds-table">
+            <thead>
+                <tr>
+                    <aura:iteration items="{!v.columns}" var="column">
+                        <th class="missions-header" scope="col">
+                            <div class="slds-truncate" title="{!column.label}">{!column.label}</div>
+                        </th>
+                    </aura:iteration>
+                </tr>
+            </thead>
+
+            <tbody>
+                <aura:iteration items="{!v.data}" var="row">
+                    <tr class="slds-hint-parent" aura:id="{!row.id}">
+                        <aura:iteration items="{!row.cells}" var="cell">
+                            <td>
+                                <aura:if isTrue="{!OR(cell.fieldType == 'badge', cell.fieldType == 'custom-badge')}">
+                                    <lightning:badge title="{!cell.value}" label="{!cell.value}" class="{!'slds-badge ' + cell.customClasses}"/>
+
+                                    <aura:set attribute="else">
+                                        <div class="slds-truncate" title="{!cell.value}">{!cell.value}</div>
+                                    </aura:set>
+                                </aura:if>
+                            </td>
+                        </aura:iteration>
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+
+        <!-- <lightning:datatable
+            class="missions-table"
+            keyField="id"
+            data="{!v.data}"
+            columns="{!v.columns}"
+            hideCheckboxColumn="true"
+            loadMoreOffset="{!v.offset}"
+            onloadmore="{!c.loadMoreMissions}"
+            resizeColumnDisabled="true"
+        /> -->
+    </lightning:card>
+
+</aura:component>
