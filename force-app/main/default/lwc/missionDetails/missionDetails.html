@@ -1,3 +1,60 @@
 <template>
-    
+    <lightning-card title="Mission Details" icon-name="standard:contact">
+
+        <!-- todo date format and color -->
+        <!-- todo spinner -->
+
+        <template lwc:if={record}>
+            <!-- <template for:each={contacts} for:item="contact">
+              <p key={contact.Id}>{contact.Name}</p>
+            </template> -->
+            <template for:each={missionData} for:item='field'>
+                <lightning-input key={field.name} type='text' label={field.label} value={field.value} read-only></lightning-input>
+            </template>
+            <!-- <div class="slds-p-around_medium lgc-bg">
+                <lightning-input type="text" label="Enter some text" value={record.Subject__c} readonly></lightning-input>
+            </div> -->
+        </template>
+        <template lwc:elseif={error}>
+            {error.body.message}
+        </template>
+
+        <!-- <div class="slds-p-around_medium lgc-bg">
+            <lightning-input type="text" label="Enter some text" value={subject} readonly></lightning-input>
+        </div> -->
+
+        <!-- <lightning-record-view-form
+            record-id={recordId}
+            object-api-name="Superhero_Mission__c"
+        >
+            <div>
+                <lightning-output-field field-name="Subject__c">
+                </lightning-output-field>
+                <lightning-output-field field-name="Details__c">
+                </lightning-output-field>
+                <lightning-output-field field-name="Complexity_Rank__c">
+                </lightning-output-field>
+                <lightning-output-field field-name="Reward__c">
+                </lightning-output-field>
+                <lightning-output-field field-name="Deadline__c">
+                </lightning-output-field>
+            </div>
+        </lightning-record-view-form> -->
+
+        <lightning-button
+            variant="brand"
+            label="Accept"
+            title="Accept"
+            onclick={handleButtonClick}
+        ></lightning-button>
+
+        <!-- <lightning-button
+            variant="brand-outline"
+            label="Brand Outline"
+            title="Primary action with lighter look"
+            onclick={handleClick}
+            class="slds-m-left_x-small">
+        </lightning-button> -->
+
+      </lightning-card> 
 </template>

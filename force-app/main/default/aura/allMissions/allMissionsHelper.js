@@ -28,14 +28,19 @@
 
                 if (!retrievedMissions.length) return;
 
-                for (const mission of retrievedMissions) {
-                    mission.GuildName = mission.Guild__r.Name;
-                }
+                retrievedMissions.map(mission => mission.GuildName = mission.Guild__r.Name);
+
                 var processedMissions = this.populateTableBodyData(cmp, retrievedMissions);
                 var data = cmp.get('v.data');
                 data.push(...processedMissions);
                 cmp.set("v.data", data);
                 cmp.set('v.offset', cmp.get('v.offset') + Math.min(numberofRecords, processedMissions.length));
+            } else if (state === "ERROR") {
+                var errors = response.getError();
+                console.error(errors && errors.length && errors[0].message
+                    ? 'Error message: ' + errors[0].message
+                    : 'Unknown error'
+                );
             }
         });
 
@@ -45,9 +50,10 @@
     populateTableBodyData: function(cmp, missions) {
         var result = [];
 
-        for (const mission of missions) {
+        missions.forEach(mission => {
             var row = {id: mission.Id, cells: []};
-            for (const column of cmp.get('v.columns')) {
+
+            cmp.get('v.columns').forEach(column => {
                 row.cells.push({
                     value: mission[column.fieldName],
                     fieldType: column.type,
@@ -57,9 +63,10 @@
                             ? 'custom-badge-dark'
                             : ''
                 });
-            }
+            });
+
             result.push(row);
-        }
+        });
 
         return result;
     }

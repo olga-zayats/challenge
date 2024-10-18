@@ -25,7 +25,7 @@
 
             <tbody>
                 <aura:iteration items="{!v.data}" var="row">
-                    <tr class="slds-hint-parent" aura:id="{!row.id}">
+                    <tr class="slds-hint-parent" data-id="{!row.id}" onclick="{!c.handleRowClick}">
                         <aura:iteration items="{!row.cells}" var="cell">
                             <td>
                                 <aura:if isTrue="{!OR(cell.fieldType == 'badge', cell.fieldType == 'custom-badge')}">
@@ -41,17 +41,8 @@
                 </aura:iteration>
             </tbody>
         </table>
-
-        <!-- <lightning:datatable
-            class="missions-table"
-            keyField="id"
-            data="{!v.data}"
-            columns="{!v.columns}"
-            hideCheckboxColumn="true"
-            loadMoreOffset="{!v.offset}"
-            onloadmore="{!c.loadMoreMissions}"
-            resizeColumnDisabled="true"
-        /> -->
     </lightning:card>
+
+    <lightning:messageChannel type="missionMessageChannel__c" aura:id="missionMessageChannel"/>
 
 </aura:component>
