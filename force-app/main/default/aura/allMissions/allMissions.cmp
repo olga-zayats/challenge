@@ -4,6 +4,8 @@
     <aura:attribute name="columns" type="List" />
     <aura:attribute name="title" type="String" default="All Missions" />
     <aura:attribute name="offset" type="Integer" default="0" />
+    <aura:attribute name="allMissionsLoaded" type="Boolean" default="false" />
+    <aura:attribute name="isLoading" type="Boolean" default="false" />
     <aura:handler name="init" value="{!this}" action="{!c.init}" />
 
     <lightning:card>
@@ -12,35 +14,37 @@
             <lightning:icon iconName="utility:connected_apps" size="small"/>
         </aura:set>
 
-        <table class="slds-table">
-            <thead>
-                <tr>
-                    <aura:iteration items="{!v.columns}" var="column">
-                        <th class="missions-header" scope="col">
-                            <div class="slds-truncate" title="{!column.label}">{!column.label}</div>
-                        </th>
-                    </aura:iteration>
-                </tr>
-            </thead>
-
-            <tbody>
-                <aura:iteration items="{!v.data}" var="row">
-                    <tr class="slds-hint-parent" data-id="{!row.id}" onclick="{!c.handleRowClick}">
-                        <aura:iteration items="{!row.cells}" var="cell">
-                            <td>
-                                <aura:if isTrue="{!OR(cell.fieldType == 'badge', cell.fieldType == 'custom-badge')}">
-                                    <lightning:badge title="{!cell.value}" label="{!cell.value}" class="{!'slds-badge ' + cell.customClasses}"/>
-
-                                    <aura:set attribute="else">
-                                        <div class="slds-truncate" title="{!cell.value}">{!cell.value}</div>
-                                    </aura:set>
-                                </aura:if>
-                            </td>
+        <div class="scrollable" onscroll="{!c.handleScroll}">
+            <table class="slds-table">
+                <thead>
+                    <tr>
+                        <aura:iteration items="{!v.columns}" var="column">
+                            <th class="missions-header" scope="col">
+                                <div class="slds-truncate" title="{!column.label}">{!column.label}</div>
+                            </th>
                         </aura:iteration>
                     </tr>
-                </aura:iteration>
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                    <aura:iteration items="{!v.data}" var="row">
+                        <tr class="slds-hint-parent" data-id="{!row.id}" onclick="{!c.handleRowClick}">
+                            <aura:iteration items="{!row.cells}" var="cell">
+                                <td>
+                                    <aura:if isTrue="{!OR(cell.fieldType == 'badge', cell.fieldType == 'custom-badge')}">
+                                        <lightning:badge title="{!cell.value}" label="{!cell.value}" class="{!'slds-badge ' + cell.customClasses}"/>
+
+                                        <aura:set attribute="else">
+                                            <div class="slds-truncate" title="{!cell.value}">{!cell.value}</div>
+                                        </aura:set>
+                                    </aura:if>
+                                </td>
+                            </aura:iteration>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+        </div>
     </lightning:card>
 
     <lightning:messageChannel type="missionMessageChannel__c" aura:id="missionMessageChannel"/>

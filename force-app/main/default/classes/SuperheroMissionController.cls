@@ -43,7 +43,7 @@ public without sharing class SuperheroMissionController {
 
     @AuraEnabled(cacheable=true)
     public static Superhero_Mission__c getMissionById(Id recordId) {
-        return [SELECT Complexity_Rank__c, Subject__c, Guild__r.Name, Reward__c, Deadline__c,
+        return [SELECT Complexity_Rank__c, Subject__c, Guild__r.Name, Reward__c, Deadline__c, Details__c,
             (SELECT Status__c FROM Mission_Assignments__r WHERE Hero__c = :getCurrentHero()?.Id)
             FROM Superhero_Mission__c
             WHERE Id = :recordId];
@@ -61,6 +61,30 @@ public without sharing class SuperheroMissionController {
 
     public static void acceptMission() {
 
+    }
+
+    public static void sendEmailsToTheSelectedUsers(Map<Id, List<Superhero_Mission__c>> missionsByUserId, Boolean isNewMissions) {
+        List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
+
+        for (Id userId : missionsByUserId.keySet()) {
+            if (missionsByUserId.get(userId).isEmpty()) continue;
+
+            Messaging.SingleEmailMessage newEmail = new Messaging.SingleEmailMessage();
+            newEmail.setTargetObjectId(userId);
+            newEmail.setSaveAsActivity(false);
+            newEmail.setSubject((isNewMissions ? 'New' : 'Completed') + ' Superhero Missions');
+            String body = ('Check out ' + (isNewMissions ? 'new' : 'completed') + ' superhero missions: \n');
+
+            for (Superhero_Mission__c mission : missionsByUserId.get(userId)) {
+                body += String.format('{0}\n', new List<Object>{mission.Subject__c});
+            }
+
+            newEmail.setPlainTextBody(body);
+
+            emailsToSend.add(newEmail);
+        }
+
+        Messaging.sendEmail(emailsToSend);
     }
 
 }

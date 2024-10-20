@@ -5,6 +5,7 @@ import missionMessageChannel from '@salesforce/messageChannel/missionMessageChan
 import getMissionById from '@salesforce/apex/SuperheroMissionController.getMissionById';
 import getCurrentUserHero from '@salesforce/apex/SuperheroMissionController.getCurrentUserHero';
 import createMissionAssignments from '@salesforce/apex/MissionAssignmentController.createMissionAssignments';
+import completeMissions from '@salesforce/apex/MissionAssignmentController.completeMissions';
 import HERO_OBJECT from "@salesforce/schema/Hero__c";
 import RANK_FIELD from "@salesforce/schema/Hero__c.Rank__c";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
@@ -112,9 +113,6 @@ export default class MissionDetails extends LightningElement {
         let heroAndMissionIds = {};
         heroAndMissionIds[this.hero.Id] = [this.record.Id];
 
-        console.log(JSON.stringify(heroAndMissionIds));
-
-        // todo accept mission
         createMissionAssignments({heroAndMissionIds: heroAndMissionIds}).then(() => {
             this.showToast('SUCCESS', 'New mission assignment created!', 'success');
             this.error = undefined;
@@ -125,7 +123,16 @@ export default class MissionDetails extends LightningElement {
     }
 
     handleCompleteClick() {
+        let heroAndMissionIds = {};
+        heroAndMissionIds[this.hero.Id] = [this.record.Id];
 
+        completeMissions({heroAndMissionIds: heroAndMissionIds}).then(() => {
+            this.showToast('SUCCESS', 'Mission is completed!', 'success');
+            this.error = undefined;
+        }).catch((error) => {
+            this.error = error;
+            this.showToast('ERROR', error.body.message, 'error');
+        });
     }
 
     checkIfHeroRankIsSuitable() {

@@ -16,24 +16,27 @@
         return columns;
     },
 
-    retrieveMissionsData: function (cmp, numberofRecords) {
+    retrieveMissionsData: function (cmp, numberOfRecords) {
         var action = cmp.get("c.getMissions");
         action.setParams({
             "offset": cmp.get("v.offset"),
-            "numberOfRecords": numberofRecords
+            "numberOfRecords": numberOfRecords
         });
-        action.setCallback(this, function(response){
+        action.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
                 var retrievedMissions = response.getReturnValue();
 
-                if (!retrievedMissions.length) return;
+                if (!retrievedMissions.length) {
+                    cmp.set("v.allMissionsLoaded", true);
+                    return;
+                }
 
                 var processedMissions = this.populateTableBodyData(cmp, retrievedMissions);
                 var data = cmp.get('v.data');
                 data.push(...processedMissions);
                 cmp.set("v.data", data);
-                cmp.set('v.offset', cmp.get('v.offset') + Math.min(numberofRecords, processedMissions.length));
+                cmp.set('v.offset', cmp.get('v.offset') + Math.min(numberOfRecords, processedMissions.length));
             } else if (state === "ERROR") {
                 var errors = response.getError();
                 console.error(errors && errors.length && errors[0].message
@@ -41,6 +44,7 @@
                     : 'Unknown error'
                 );
             }
+            cmp.set("v.isLoading", false);
         });
 
         $A.enqueueAction(action);

@@ -6,6 +6,7 @@
     --slds-c-card-spacing-block-start: 32px;
     --slds-c-card-sizing-border: 0;
     --slds-c-card-heading-font-size: 12px;
+    --slds-c-input-shadow-focus: none;
     height: 800px;
     border-style: none;
     padding: 24px;
@@ -16,4 +17,8 @@
     font-weight: 400;
     letter-spacing: -0.006em;
     line-height: 16px;
+}
+
+lightning-input:last-of-type {
+    color: red;
 }

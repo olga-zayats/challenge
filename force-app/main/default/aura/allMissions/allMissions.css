@@ -11,6 +11,11 @@
     line-height: 16px;
 }
 
+.THIS .scrollable {
+    height: 700px;
+    overflow-y: scroll;
+}
+
 .THIS th.missions-header {
     background-color: #F1F3F5;
     font-weight: normal;
