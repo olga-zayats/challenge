@@ -24,9 +24,9 @@ trigger SuperheroMissionTrigger on Superhero_Mission__c (after insert, before up
         // );
         List<Superhero_Mission__c> completedMissions = new List<Superhero_Mission__c>();
         for (Id missionId : Trigger.newMap.keySet()) {
-            if (Trigger.newMap.get(missionId).Status__c == 'Completed' && Trigger.oldMap.get(missionId).Status__c != Trigger.newMap.get(missionId).Status__c) {
-                completedMissions.add(Trigger.newMap.get(missionId));
-            }
+            // if (Trigger.newMap.get(missionId).Status__c == 'Completed' && Trigger.oldMap.get(missionId).Status__c != Trigger.newMap.get(missionId).Status__c) {
+            //     completedMissions.add(Trigger.newMap.get(missionId));
+            // }
         }
 
         List<Mission_Assignment__c> assignmentsToUpdate = new List<Mission_Assignment__c>();

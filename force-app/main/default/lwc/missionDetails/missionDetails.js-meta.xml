@@ -5,5 +5,11 @@
     <masterLabel>Mission Details</masterLabel>
     <targets>
         <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
     </targets>
+    <targetConfigs>  
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="emptyDetailText" type="String" default="Select a mission to learn more about it" label="Text to show when there is no record Id"/>
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

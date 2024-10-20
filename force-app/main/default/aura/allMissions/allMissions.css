@@ -51,3 +51,8 @@
 .THIS .custom-badge-dark span {
     margin: 0 auto;
 }
+
+.THIS .slds-badge_blue {
+    background-color: #0176D3;
+    color: white;
+}

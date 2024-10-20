@@ -1,15 +1,16 @@
 ({
     badgeCssClasses: {
         'Available': 'slds-theme_success',
-        'Completed': 'slds-badge_inverse'
+        'Completed': 'slds-badge_inverse',
+        'In Progress': 'slds-badge_blue'
     },
 
     getColumns: function () {
         var columns = [
-            {label: 'Rank', fieldName: 'Complexity_Rank__c', type: 'custom-badge'},
-            {label: 'Mission', fieldName: 'Subject__c', type: 'text'},
+            {label: 'Rank', fieldName: 'Rank', type: 'custom-badge'},
+            {label: 'Mission', fieldName: 'Subject', type: 'text'},
             {label: 'Guild', fieldName: 'GuildName', type: 'text'},
-            {label: 'Status', fieldName: 'Status__c', type: 'badge'}
+            {label: 'Status', fieldName: 'Status', type: 'badge'}
         ];
 
         return columns;
@@ -27,8 +28,6 @@
                 var retrievedMissions = response.getReturnValue();
 
                 if (!retrievedMissions.length) return;
-
-                retrievedMissions.map(mission => mission.GuildName = mission.Guild__r.Name);
 
                 var processedMissions = this.populateTableBodyData(cmp, retrievedMissions);
                 var data = cmp.get('v.data');
