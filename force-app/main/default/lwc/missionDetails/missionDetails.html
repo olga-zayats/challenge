@@ -1,35 +1,50 @@
 <template>
         <template lwc:if={record}>
-            <lightning-card title="Mission Details" icon-name="standard:contact">
+            <lightning-card class="details-card">
+                <h2 slot="title" class="slds-card__header-title slds-text-heading--large">
+                    <span class="slds-card__header-link slds-truncate" title="Mission Details">Mission Details</span>
+
+                    <lightning-icon
+                        icon-name="utility:connected_apps"
+                        variant="warning"
+                        alternative-text="Mission Details"
+                        title="Mission Details"
+                    ></lightning-icon>
+                </h2>
                 <template for:each={missionData} for:item='field'>
                     <lightning-input key={field.name} type={field.type} label={field.label} value={field.value} read-only></lightning-input>
+
+                    <template lwc:if={field.withDivider}>
+                        <lightning-menu-divider key={field.name}></lightning-menu-divider>
+                    </template>
                 </template>
 
-                <lightning-button if:true={showAcceptButton}
-                    variant="brand"
-                    label="Accept"
-                    title="Accept"
-                    onclick={handleAcceptClick}
-                ></lightning-button>
+                <div class="button-wrapper">
+                    <lightning-button if:true={showAcceptButton}
+                        variant="brand"
+                        label="Accept"
+                        title="Accept"
+                        onclick={handleAcceptClick}
+                    ></lightning-button>
 
-                <lightning-button if:true={showCompleteButton}
-                    variant="brand-outline"
-                    label="Complete"
-                    title="Complete"
-                    onclick={handleCompleteClick}
-                    class="slds-m-left_x-small">
-                </lightning-button>
+                    <lightning-button if:true={showCompleteButton}
+                        variant="brand-outline"
+                        label="Complete"
+                        title="Complete"
+                        onclick={handleCompleteClick}
+                    ></lightning-button>
+                </div>
             </lightning-card>
         </template>
 
         <template lwc:elseif={error}>
-            <lightning-card>
+            <lightning-card class="details-card">
                 {error.body.message}
             </lightning-card>
         </template>
 
         <template lwc:else>
-            <lightning-card>
+            <lightning-card class="details-card">
                 {emptyDetailText}
             </lightning-card>
         </template>

@@ -2,7 +2,8 @@
     badgeCssClasses: {
         'Available': 'slds-theme_success',
         'Completed': 'slds-badge_inverse',
-        'In Progress': 'slds-badge_blue'
+        'In Progress': 'slds-badge_blue',
+        'Failed': 'slds-theme_error'
     },
 
     getColumns: function () {

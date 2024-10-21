@@ -22,6 +22,24 @@
             cmp.set("v.isLoading", true);
             helper.retrieveMissionsData(cmp, 10);
         }
+    },
+
+    handleReceiveMessage: function(cmp, event, helper) {
+        const status = event.getParam('status');
+        if (!status) return;
+
+        var data = cmp.get("v.data");
+        var indexOfRowToUpdate = data.findIndex(row => row.id == event.getParam('recordId'));
+        var rowToUpdate = Object.assign({}, data[indexOfRowToUpdate]);
+
+        var statusField = Object.assign({}, rowToUpdate.cells[rowToUpdate.cells.length - 1]);
+        statusField.value = status;
+        statusField.customClasses = helper.badgeCssClasses[status] || ''
+
+        rowToUpdate.cells.splice(rowToUpdate.cells.length - 1, 1, statusField);
+        data.splice(indexOfRowToUpdate, 1, rowToUpdate);
+
+        cmp.set("v.data", data);
     }
 
 });

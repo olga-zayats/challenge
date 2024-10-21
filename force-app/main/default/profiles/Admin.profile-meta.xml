@@ -39,6 +39,9 @@
     <layoutAssignments>
         <layout>Guild__c-Guild Layout</layout>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>Superhero_Mission__c-Superhero Mission Layout</layout>
+    </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>

@@ -7,7 +7,6 @@ public without sharing class MissionAssignmentController {
         try {
             List<Mission_Assignment__c> assignmentsToInsert = new List<Mission_Assignment__c>();
 
-            // todo badge for failed mission?
             for (Id heroId : heroAndMissionIds.keySet()) {
                 if (getNumberOfActiveAssignments(heroId) + heroAndMissionIds.get(heroId).size() > ACTIVE_ASSIGNMENT_LIMIT) {
                     throw new HandledException('You cannot take more than ' + ACTIVE_ASSIGNMENT_LIMIT + ' active mission assignments!');
@@ -50,7 +49,7 @@ public without sharing class MissionAssignmentController {
     }
 
     static Integer getNumberOfActiveAssignments(Id heroId) {
-        return [SELECT COUNT() FROM Mission_Assignment__c WHERE Hero__c = :heroId];
+        return [SELECT COUNT() FROM Mission_Assignment__c WHERE Hero__c = :heroId AND Status__c = 'In Progress'];
     }
 
     public class HandledException extends Exception {}

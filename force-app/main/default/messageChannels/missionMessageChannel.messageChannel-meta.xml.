@@ -7,4 +7,8 @@
         <fieldName>recordId</fieldName>
         <description>Mission record Id</description>
     </lightningMessageFields>
+    <lightningMessageFields>
+        <fieldName>status</fieldName>
+        <description>Mission assignment status</description>
+    </lightningMessageFields>
 </LightningMessageChannel>

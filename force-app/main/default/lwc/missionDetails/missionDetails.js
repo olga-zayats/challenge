@@ -1,5 +1,5 @@
 import { LightningElement, api, track, wire } from 'lwc';
-import { subscribe, MessageContext } from 'lightning/messageService';
+import { publish, subscribe, MessageContext } from 'lightning/messageService';
 import { getObjectInfo, getPicklistValues } from "lightning/uiObjectInfoApi";
 import missionMessageChannel from '@salesforce/messageChannel/missionMessageChannel__c';
 import getMissionById from '@salesforce/apex/SuperheroMissionController.getMissionById';
@@ -9,18 +9,20 @@ import completeMissions from '@salesforce/apex/MissionAssignmentController.compl
 import HERO_OBJECT from "@salesforce/schema/Hero__c";
 import RANK_FIELD from "@salesforce/schema/Hero__c.Rank__c";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import { refreshApex } from "@salesforce/apex";
 
 const MISSION_DETAIL_FIELDS = [
     {name: 'Subject__c'},
     {name: 'Details__c'},
-    {name: 'Complexity_Rank__c', label: 'Rank'},
-    {name: 'Reward__c'},
-    {name: 'Deadline__c'}
+    {name: 'Complexity_Rank__c', label: 'Rank', withDivider: true},
+    {name: 'Reward__c', type: 'currency'},
+    {name: 'Deadline__c', type: 'date'}
 ];
 
 export default class MissionDetails extends LightningElement {
     subscription = null;
     recordId;
+    wiredRecord;
     record;
     hero;
     error;
@@ -35,13 +37,17 @@ export default class MissionDetails extends LightningElement {
 
     @wire(getMissionById, {
         recordId: '$recordId'
-    }) wiredMission({ error, data }) {
+    }) wiredMission(value) {
+        this.wiredRecord = value;
+        const { data, error } = value;
+
         if (data) {
             this.record = data;
             console.log(this.record);
             this.missionData = MISSION_DETAIL_FIELDS.map(field => { return {...field,
-                value : this.record[field.name],
-                label : field.label || field.name.replace('__c', '').replace('_', ' ')
+                value: this.record[field.name],
+                label: field.label || field.name.replace('__c', '').replace('_', ' '),
+                type: field.type || 'text' 
             }});
             this.error = undefined;
         } else if (error) {
@@ -66,7 +72,6 @@ export default class MissionDetails extends LightningElement {
             this.heroRecordTypeId = data.defaultRecordTypeId;
             this.error = undefined;
         } else if (error) {
-            // todo error handling to function
             this.error = error;
             this.heroRecordTypeId = undefined;
         }
@@ -111,10 +116,16 @@ export default class MissionDetails extends LightningElement {
         if (!this.checkIfHeroRankIsSuitable()) return;
 
         let heroAndMissionIds = {};
-        heroAndMissionIds[this.hero.Id] = [this.record.Id];
+        heroAndMissionIds[this.hero.Id] = [this.recordId];
 
         createMissionAssignments({heroAndMissionIds: heroAndMissionIds}).then(() => {
             this.showToast('SUCCESS', 'New mission assignment created!', 'success');
+            refreshApex(this.wiredRecord);
+            let message = {
+                recordId: this.recordId,
+                status: 'In Progress'
+            };
+            publish(this.messageContext, missionMessageChannel, message);
             this.error = undefined;
         }).catch((error) => {
             this.error = error;
@@ -126,8 +137,14 @@ export default class MissionDetails extends LightningElement {
         let heroAndMissionIds = {};
         heroAndMissionIds[this.hero.Id] = [this.record.Id];
 
-        completeMissions({heroAndMissionIds: heroAndMissionIds}).then(() => {
+        completeMissions({heroAndMissionIds: heroAndMissionIds}).then(data => {
             this.showToast('SUCCESS', 'Mission is completed!', 'success');
+            refreshApex(this.wiredRecord);
+            let message = {
+                recordId: this.recordId,
+                status: 'Completed'
+            };
+            publish(this.messageContext, missionMessageChannel, message);
             this.error = undefined;
         }).catch((error) => {
             this.error = error;

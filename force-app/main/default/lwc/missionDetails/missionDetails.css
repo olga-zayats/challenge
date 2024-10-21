@@ -1,24 +1,33 @@
 :host {
-    --slds-c-card-radius-border: 20px;
-    --slds-c-card-spacing-inline-end: 24px;
-    --slds-c-card-spacing-inline-start: 24px;
-    --slds-c-card-spacing-block-end: 32px;
-    --slds-c-card-spacing-block-start: 32px;
+    --slds-c-card-radius-border: 1.25rem;
+    --slds-c-card-spacing-inline-end: 1.5rem;
+    --slds-c-card-spacing-inline-start: 1.5rem;
+    --slds-c-card-spacing-block-end: 2rem;
+    --slds-c-card-spacing-block-start: 2rem;
     --slds-c-card-sizing-border: 0;
-    --slds-c-card-heading-font-size: 12px;
     --slds-c-input-shadow-focus: none;
-    height: 800px;
+    --slds-c-card-header-spacing-block: 0;
+    --slds-c-card-header-spacing-inline: 0;
+    --lwc-cardFontWeight: 700;
+    --lwc-fontSize9: 1.5rem;
+    height: 59rem;
+    max-height: 95vh;
+    display: block;
     border-style: none;
-    padding: 24px;
     border: none;
-    margin: 16px 0;
+    margin: 1rem 0;
     color: rgba(24, 24, 24, 0.95);
-    font-size: 13px;
+    font-size: .813rem;
     font-weight: 400;
     letter-spacing: -0.006em;
-    line-height: 16px;
+    line-height: 1rem;
 }
 
 lightning-input:last-of-type {
     color: red;
+}
+
+.button-wrapper lightning-button {
+    display: flex;
+    justify-content: center;
 }

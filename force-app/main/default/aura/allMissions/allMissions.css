@@ -1,19 +1,26 @@
 .THIS {
-    height: 800px;
-    border-radius: 20px;
-    padding: 24px;
+    height: 95vh;
+    max-height: 95vh;
+    min-height: 22rem;
+    overflow: hidden;
+    border-radius: 1.25rem;
+    padding: 1.5rem;
     border: none;
-    margin: 16px 0;
+    margin: 1rem 0;
     color: rgba(24, 24, 24, 0.95);
-    font-size: 13px;
+    font-size: .813rem;
     font-weight: 400;
     letter-spacing: -0.006em;
-    line-height: 16px;
+    line-height: 1rem;
+    --lwc-colorTextIconInverse: black;
+    --slds-c-icon-color-background: white;
 }
 
 .THIS .scrollable {
-    height: 700px;
-    overflow-y: scroll;
+    max-height: 25rem;
+    height: 86vh;
+    max-height: 86vh;
+    overflow: auto;
 }
 
 .THIS th.missions-header {
@@ -21,21 +28,21 @@
     font-weight: normal;
     color: #333333;
     text-align: left;
-    font-size: 12px;
+    font-size: .75rem;
 }
 
 .THIS th.missions-header:first-child {
-    border-radius: 4px 0 0 4px;
+    border-radius: .25rem 0 0 .25rem;
 }
 
 .THIS th.missions-header:last-child {
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 .25rem .25rem 0;
 }
 
-.THIS .slds-card__header-title {
-    font-size: 24px;
+.THIS .slds-text-heading--large {
+    font-size: 1.5rem;
     font-weight: 700;
-    line-height: 34px;
+    line-height: 2.125rem;
     letter-spacing: 0.01em;
     text-align: left;
     color: black;
@@ -48,9 +55,9 @@
 .THIS .custom-badge-dark {
     background-color: #181818;
     color: white;
-    width: 30px;
-    height: 28px;
-    border-radius: 5px;
+    width: 1.875rem;
+    height: 1.75rem;
+    border-radius: .313rem;
 }
 
 .THIS .custom-badge-dark span {

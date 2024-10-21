@@ -10,8 +10,10 @@
 
     <lightning:card>
         <aura:set attribute="title">
-            {!v.title}
-            <lightning:icon iconName="utility:connected_apps" size="small"/>
+            <span class="slds-text-heading--large">
+                {!v.title}
+            </span>
+            <lightning:icon iconName="custom:custom43" variant="inverse"/>
         </aura:set>
 
         <div class="scrollable" onscroll="{!c.handleScroll}">
@@ -45,8 +47,8 @@
                 </tbody>
             </table>
         </div>
-    </lightning:card>
 
-    <lightning:messageChannel type="missionMessageChannel__c" aura:id="missionMessageChannel"/>
+        <lightning:messageChannel type="missionMessageChannel__c" aura:id="missionMessageChannel" onMessage="{!c.handleReceiveMessage}"/>
+    </lightning:card>
 
 </aura:component>

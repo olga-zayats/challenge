@@ -9,11 +9,28 @@
 	</types>
 	<types>
 		<members>*</members>
+		<name>CustomSite</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>ExperienceBundle</name>
+	</types>
+	<types>
+		<members>*</members>
 		<name>GlobalValueSet</name>
 	</types>
 	<types>
 		<members>Guild__c-Guild Layout</members>
+		<members>Superhero_Mission__c-Superhero Mission Layout</members>
 		<name>Layout</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>Network</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>NetworkBranding</name>
 	</types>
 	<types>
 		<members>Hero_Admin</members>
@@ -23,6 +40,10 @@
 	<types>
 		<members>Admin</members>
 		<name>Profile</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>SiteDotCom</name>
 	</types>
 	<version>60.0</version>
 </Package>
